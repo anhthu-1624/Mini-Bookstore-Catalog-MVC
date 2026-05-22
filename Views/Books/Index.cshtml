@@ -1,0 +1,162 @@
+@model PagedResult<BookListItemViewModel>
+@{
+    ViewData["Title"] = "Danh Sách Sách";
+
+    string keyword  = ViewBag.Keyword  ?? "";
+    string genre    = ViewBag.Genre    ?? "";
+    string stock    = ViewBag.Stock    ?? "";
+    string sortBy   = ViewBag.SortBy   ?? "title";
+    var    genres   = (List<string>)(ViewBag.Genres ?? new List<string>());
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title">📚 Danh Sách Sách</h2>
+        <p class="page-description">
+            Toàn bộ sách hiện có trong kho — tìm kiếm, lọc và sắp xếp nhanh chóng.
+        </p>
+    </div>
+    <div class="d-flex gap-2">
+        <a class="btn btn-success" href="/Books/Create">+ Thêm sách</a>
+        <a class="btn btn-primary" href="/Books/Stats">📊 Thống kê</a>
+    </div>
+</div>
+
+{{!-- ── FORM TÌM KIẾM / LỌC / SẮP XẾP ── --}}
+<form method="get" action="/Books" class="row g-2 mb-4">
+    <div class="col-md-4">
+        <input type="text"
+               name="keyword"
+               value="@keyword"
+               class="form-control"
+               placeholder="🔍 Tìm theo tên, tác giả, ISBN..." />
+    </div>
+
+    <div class="col-md-2">
+        <select name="genre" class="form-select">
+            <option value="">-- Thể loại --</option>
+            @foreach (var g in genres)
+            {
+                <option value="@g" selected="@(genre == g)">@g</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <select name="stock" class="form-select">
+            <option value="">-- Tồn kho --</option>
+            <option value="ok"  selected="@(stock == "ok")">Còn sách</option>
+            <option value="low" selected="@(stock == "low")">Sắp hết</option>
+            <option value="out" selected="@(stock == "out")">Hết sách</option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <select name="sortBy" class="form-select">
+            <option value="title"      selected="@(sortBy == "title")">Tên A→Z</option>
+            <option value="author"     selected="@(sortBy == "author")">Tác giả A→Z</option>
+            <option value="price"      selected="@(sortBy == "price")">Giá tăng dần</option>
+            <option value="price_desc" selected="@(sortBy == "price_desc")">Giá giảm dần</option>
+            <option value="stock"      selected="@(sortBy == "stock")">Tồn kho tăng</option>
+            <option value="newest"     selected="@(sortBy == "newest")">Mới nhất</option>
+        </select>
+    </div>
+
+    <div class="col-md-1">
+        <button type="submit" class="btn btn-primary w-100">Lọc</button>
+    </div>
+
+    <div class="col-md-1">
+        <a href="/Books" class="btn btn-outline-secondary w-100">Xoá</a>
+    </div>
+</form>
+
+{{!-- ── TỔNG KẾT KẾT QUẢ ── --}}
+<div class="info-panel mb-3">
+    <strong>Tìm thấy:</strong> @Model.TotalItems cuốn
+    — Trang <strong>@Model.Page</strong> / @Model.TotalPages
+</div>
+
+{{!-- ── BẢNG DANH SÁCH ── --}}
+@if (Model.TotalItems == 0)
+{
+    <div class="alert alert-warning">
+        Không tìm thấy sách nào phù hợp. <a href="/Books">Xem tất cả</a>
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-striped align-middle">
+        <thead>
+            <tr>
+                <th>ISBN</th>
+                <th>Tên sách</th>
+                <th>Tác giả</th>
+                <th>Thể loại</th>
+                <th>Nhà xuất bản</th>
+                <th>Giá bán</th>
+                <th>Tồn kho</th>
+                <th>Giá trị kho</th>
+                <th>Trạng thái</th>
+                <th>Chi tiết</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td><small class="text-muted">@item.Isbn</small></td>
+                    <td><strong>@item.Title</strong></td>
+                    <td>@item.Author</td>
+                    <td>@item.Publisher</td>
+                    <td>@item.Genre</td>
+                    <td>@item.PriceText</td>
+                    <td>@item.Stock</td>
+                    <td>@item.InventoryValueText</td>
+                    <td>
+                        <span class="@item.StockStatusClass">
+                            @item.StockStatus
+                        </span>
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary"
+                           href="/Books/Detail/@item.Id">Xem</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @* -- ── PHÂN TRANG ── --*@
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(!Model.HasPrevPage ? "disabled" : "")">
+                <a class="page-link"
+                   href="/Books?page=@(Model.Page - 1)&keyword=@keyword&genre=@genre&stock=@stock&sortBy=@sortBy">
+                    ‹ Trước
+                </a>
+            </li>
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link"
+                       href="/Books?page=@i&keyword=@keyword&genre=@genre&stock=@stock&sortBy=@sortBy">
+                        @i
+                    </a>
+                </li>
+            }
+
+            <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                <a class="page-link"
+                   href="/Books?page=@(Model.Page + 1)&keyword=@keyword&genre=@genre&stock=@stock&sortBy=@sortBy">
+                    Sau ›
+                </a>
+            </li>
+        </ul>
+    </nav>
+}
+
+<p class="mt-4">
+    <a class="btn btn-light" href="/">← Quay lại trang chủ</a>
+</p>

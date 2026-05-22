@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Trang Chủ";
+}
+
+<div class="lab-hero">
+    <h1>📚 Mini Bookstore Catalog</h1>
+    <p>
+        Ứng dụng quản lý danh mục sách đơn giản, được xây dựng bằng ASP.NET Core MVC.
+        <br />
+        Tra cứu thông tin sách, tồn kho và thống kê nhanh chóng.
+    </p>
+</div>
+
+<div class="info-panel">
+    <h4>Tính năng nổi bật</h4>
+    <p>
+        Tìm kiếm & lọc sách theo tên, tác giả, thể loại — Sắp xếp linh hoạt theo giá,
+        tồn kho, ngày xuất bản — Xem chi tiết từng cuốn và gợi ý sách liên quan —
+        Thống kê tổng quan kho sách theo thời gian thực.
+    </p>
+</div>
+
+<h3>Luồng xử lý trong Mini Bookstore MVC</h3>
+<ol class="flow-list">
+    <li>1. User truy cập URL danh sách hoặc chi tiết sách.</li>
+    <li>2. <strong>BooksController</strong> nhận request và đọc tham số lọc / tìm kiếm.</li>
+    <li>3. Controller gọi <strong>BookService</strong> để lấy và xử lý dữ liệu.</li>
+    <li>4. Dữ liệu được map sang <strong>ViewModel</strong> phù hợp (List / Detail / Stats).</li>
+    <li>5. <strong>Razor View</strong> render HTML và trả về cho trình duyệt.</li>
+</ol>
+
+<div class="row mt-4 text-center">
+    <div class="col-md-4 mb-3">
+        <a class="btn btn-primary btn-lg w-100" href="/Books">
+            📖 Danh sách sách
+        </a>
+    </div>
+    <div class="col-md-4 mb-3">
+        <a class="btn btn-success btn-lg w-100" href="/Books/Stats">
+            📊 Thống kê kho
+        </a>
+    </div>
+    <div class="col-md-4 mb-3">
+        <a class="btn btn-outline-secondary btn-lg w-100" href="/Books/BookJson">
+            🔗 Xem JSON API
+        </a>
+    </div>
+</div>

@@ -1,0 +1,169 @@
+@model BookStatsViewModel
+@{
+    ViewData["Title"] = "Thống Kê Kho Sách";
+    var urgentBooks  = ViewBag.UrgentBooks  as List<BookListItemViewModel> ?? new();
+    var topExpensive = ViewBag.TopExpensive as List<BookListItemViewModel> ?? new();
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title">📊 Thống Kê Kho Sách</h2>
+        <p class="page-description">
+            Tổng quan tình hình tồn kho — nhanh chóng nắm bắt sách cần nhập và giá trị kho hiện tại.
+        </p>
+    </div>
+    <a class="btn btn-light" href="/Books">← Quay lại danh sách</a>
+</div>
+
+@* ── STAT CARDS ── *@
+<div class="stat-grid">
+    <div class="stat-card">
+        <div class="stat-number">@Model.TotalBooks</div>
+        <div class="stat-label">Tổng số đầu sách</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-number">@Model.TotalStock</div>
+        <div class="stat-label">Tổng số cuốn trong kho</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-number">@Model.TotalInventoryValueText</div>
+        <div class="stat-label">Tổng giá trị tồn kho</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-number text-danger">@Model.OutOfStockCount</div>
+        <div class="stat-label">Đầu sách đã hết</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-number text-warning">@Model.NeedReorderCount</div>
+        <div class="stat-label">Đầu sách sắp hết</div>
+    </div>
+</div>
+
+@* ── ĐÁNH GIÁ TỔNG QUAN ── *@
+<div class="info-panel mt-4">
+    <h4>Đánh giá tình hình kho sách</h4>
+
+    @if (Model.OutOfStockCount > 0)
+    {
+        <p class="text-danger">
+            ⚠️ Có <strong>@Model.OutOfStockCount</strong> đầu sách đã hết.
+            Cần kiểm tra và nhập thêm sớm.
+        </p>
+    }
+    else if (Model.NeedReorderCount > 0)
+    {
+        <p class="text-warning">
+            🔔 Có <strong>@Model.NeedReorderCount</strong> đầu sách sắp hết.
+            Nên lập kế hoạch nhập thêm.
+        </p>
+    }
+    else
+    {
+        <p class="text-success">
+            ✅ Tồn kho hiện tại đang ổn định. Không có sách nào cần nhập gấp.
+        </p>
+    }
+</div>
+
+@* ── BẢNG THỐNG KÊ CHI TIẾT ── *@
+<table class="table table-bordered mt-4">
+    <tr>
+        <th>Tổng số đầu sách</th>
+        <td>@Model.TotalBooks</td>
+    </tr>
+    <tr>
+        <th>Tổng số cuốn trong kho</th>
+        <td>@Model.TotalStock</td>
+    </tr>
+    <tr>
+        <th>Tổng giá trị tồn kho</th>
+        <td>@Model.TotalInventoryValueText</td>
+    </tr>
+    <tr>
+        <th>Số đầu sách đã hết</th>
+        <td class="text-danger">@Model.OutOfStockCount</td>
+    </tr>
+    <tr>
+        <th>Số đầu sách sắp hết</th>
+        <td class="text-warning">@Model.NeedReorderCount</td>
+    </tr>
+</table>
+
+@* ── SÁCH CẦN NHẬP HÀNG GẤP ── *@
+@if (urgentBooks.Count > 0)
+{
+    <div class="mt-5">
+        <h4>🚨 Sách cần nhập hàng gấp</h4>
+        <table class="table table-bordered table-striped align-middle mt-3">
+            <thead>
+                <tr>
+                    <th>Tên sách</th>
+                    <th>Tác giả</th>
+                    <th>Tồn kho</th>
+                    <th>Tối thiểu</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in urgentBooks)
+                {
+                    <tr>
+                        <td><strong>@book.Title</strong></td>
+                        <td>@book.Author</td>
+                        <td>@book.Stock</td>
+                        <td>@book.MinStock</td>
+                        <td>
+                            <span class="@book.StockStatusClass">@book.StockStatus</span>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-outline-primary"
+                               href="/Books/Detail/@book.Id">Xem</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@* ── TOP SÁCH ĐẮT NHẤT ── *@
+@if (topExpensive.Count > 0)
+{
+    <div class="mt-5">
+        <h4>💰 Top sách có giá cao nhất</h4>
+        <div class="row mt-3">
+            @foreach (var book in topExpensive)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h6 class="card-title">@book.Title</h6>
+                            <p class="card-text text-muted mb-1">@book.Author</p>
+                            <p class="card-text">
+                                <strong class="text-primary">@book.PriceText</strong>
+                            </p>
+                            <p class="card-text">
+                                Tồn kho: @book.Stock cuốn
+                                &nbsp;
+                                <span class="@book.StockStatusClass">@book.StockStatus</span>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a class="btn btn-sm btn-outline-primary w-100"
+                               href="/Books/Detail/@book.Id">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<p class="mt-4">
+    <a class="btn btn-light" href="/">← Quay lại trang chủ</a>
+</p>

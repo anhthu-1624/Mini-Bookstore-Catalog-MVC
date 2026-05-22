@@ -1,0 +1,134 @@
+@model BookDetailViewModel
+@{
+    ViewData["Title"] = "Chi Tiết Sách";
+    var related = ViewBag.RelatedBooks as List<BookListItemViewModel> ?? new();
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title">📖 Chi Tiết Sách</h2>
+        <p class="page-description">
+            Thông tin đầy đủ của cuốn sách trong kho.
+        </p>
+    </div>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-secondary" href="/Books/Edit/@Model.Id">✏️ Chỉnh sửa</a>
+        <a class="btn btn-light" href="/Books">← Quay lại danh sách</a>
+    </div>
+</div>
+
+<div class="detail-layout">
+
+    @* ── BẢNG THÔNG TIN CHI TIẾT ── *@
+    <div>
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <th>ISBN</th>
+                <td><code>@Model.Isbn</code></td>
+            </tr>
+            <tr>
+                <th>Tên sách</th>
+                <td><strong>@Model.Title</strong></td>
+            </tr>
+            <tr>
+                <th>Tác giả</th>
+                <td>@Model.Author</td>
+            </tr>
+            <tr>
+                <th>Thể loại</th>
+                <td>@Model.Genre</td>
+            </tr>
+            <tr>
+                <th>Nhà xuất bản</th>
+                <td>@Model.Publisher</td>
+            </tr>
+            <tr>
+                <th>Ngày xuất bản</th>
+                <td>@Model.PublishedDateText</td>
+            </tr>
+            <tr>
+                <th>Giá bán</th>
+                <td>@Model.PriceText</td>
+            </tr>
+            <tr>
+                <th>Tồn kho</th>
+                <td>@Model.Stock cuốn</td>
+            </tr>
+            <tr>
+                <th>Mức tồn tối thiểu</th>
+                <td>@Model.MinStock cuốn</td>
+            </tr>
+            <tr>
+                <th>Giá trị tồn kho</th>
+                <td>@Model.InventoryValueText</td>
+            </tr>
+            <tr>
+                <th>Trạng thái</th>
+                <td>@Model.StockStatus</td>
+            </tr>
+            <tr>
+                <th>Gợi ý nhập hàng</th>
+                <td>@Model.ReorderSuggestion</td>
+            </tr>
+            <tr>
+                <th>Cập nhật lần cuối</th>
+                <td>@Model.LastUpdatedText</td>
+            </tr>
+        </table>
+    </div>
+
+    @* ── SIDE CARDS ── *@
+    <div>
+        <div class="side-card warning">
+            <h4>Trạng thái tồn kho</h4>
+            <h3>@Model.StockStatus</h3>
+            <p>@Model.ReorderSuggestion</p>
+        </div>
+
+        <div class="side-card info">
+            <h4>Giá trị tồn kho hiện tại</h4>
+            <h3>@Model.InventoryValueText</h3>
+            <p>Tính theo giá bán và số lượng tồn kho hiện có.</p>
+        </div>
+
+        <div class="side-card success">
+            <h4>Ngày cập nhật</h4>
+            <h3>@Model.LastUpdatedText</h3>
+            <p>Thông tin sách được cập nhật gần nhất.</p>
+        </div>
+    </div>
+</div>
+
+@* ── GỢI Ý SÁCH CÙNG THỂ LOẠI ── *@
+@if (related.Count > 0)
+{
+    <div class="mt-5">
+        <h4>📚 Sách cùng thể loại "@Model.Genre"</h4>
+        <div class="row mt-3">
+            @foreach (var book in related)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h6 class="card-title">@book.Title</h6>
+                            <p class="card-text text-muted mb-1">@book.Author</p>
+                            <p class="card-text">
+                                <strong>@book.PriceText</strong>
+                                &nbsp;
+                                <span class="@book.StockStatusClass">@book.StockStatus</span>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a class="btn btn-sm btn-outline-primary w-100"
+                               href="/Books/Detail/@book.Id">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
