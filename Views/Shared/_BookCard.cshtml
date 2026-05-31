@@ -1,0 +1,31 @@
+@model BookListItemViewModel
+
+<div class="card h-100 shadow-sm">
+    <div class="card-body">
+        <h6 class="card-title fw-bold">@Model.Title</h6>
+        <p class="card-text text-muted mb-1">
+            <small>✍️ @Model.Author</small>
+        </p>
+        <p class="card-text mb-1">
+            <small class="text-muted">📚 @Model.Genre</small>
+        </p>
+        <p class="card-text mb-1">
+            <small class="text-muted">🏢 @Model.Publisher</small>
+        </p>
+        <hr class="my-2" />
+        <p class="card-text mb-1">
+            <strong class="text-primary">@Model.PriceText</strong>
+        </p>
+        <p class="card-text mb-1">
+            Tồn kho: <strong>@Model.Stock</strong> cuốn
+            &nbsp;
+            <span class="@Model.StockStatusClass">@Model.StockStatus</span>
+        </p>
+    </div>
+    <div class="card-footer bg-transparent">
+        <a class="btn btn-sm btn-outline-primary w-100"
+           asp-controller="Books" asp-action="Detail" asp-route-id="@Model.Id">
+            Xem chi tiết
+        </a>
+    </div>
+</div>

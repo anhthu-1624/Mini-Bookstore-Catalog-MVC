@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\AspNetWeek2.Mvc\\AspNetWeek2.Mvc.csproj",
-      "projectName": "AspNetWeek2.Mvc",
-      "projectPath": "D:\\AspNetWeek2.Mvc\\AspNetWeek2.Mvc.csproj",
+      "projectUniqueName": "D:\\AspNetWeek3.Mvc\\AspNetWeek3.Mvc.csproj",
+      "projectName": "AspNetWeek3.Mvc",
+      "projectPath": "D:\\AspNetWeek3.Mvc\\AspNetWeek3.Mvc.csproj",
       "packagesPath": "C:\\Users\\ANH THU\\.nuget\\packages\\",
-      "outputPath": "D:\\AspNetWeek2.Mvc\\obj\\",
+      "outputPath": "D:\\AspNetWeek3.Mvc\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ANH THU\\AppData\\Roaming\\NuGet\\NuGet.Config"

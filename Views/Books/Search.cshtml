@@ -1,0 +1,61 @@
+@model BookSearchViewModel
+@{
+    ViewData["Title"] = "Tìm Kiếm Sách";
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title">🔍 Tìm Kiếm Sách</h2>
+        <p class="page-description">Tìm kiếm theo tên sách, tác giả, ISBN, nhà xuất bản, thể loại hoặc khoảng giá.</p>
+    </div>
+    <a class="btn btn-light" asp-controller="Books" asp-action="Index">← Danh sách</a>
+</div>
+
+<form method="get" asp-controller="Books" asp-action="Search" class="card p-4 mb-4 shadow-sm">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="Keyword" class="form-label">Từ khoá (tên, tác giả, ISBN)</label>
+            <input asp-for="Keyword" class="form-control" placeholder="VD: Đắc Nhân Tâm, Dale Carnegie..." />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Publisher" class="form-label">Nhà xuất bản</label>
+            <input asp-for="Publisher" class="form-control" placeholder="VD: NXB Trẻ, NXB Hội Nhà Văn..." />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Genre" class="form-label">Thể loại</label>
+            <select asp-for="Genre" class="form-select">
+                <option value="">-- Tất cả thể loại --</option>
+                @foreach (var g in Model.AllGenres)
+                {
+                    <option value="@g">@g</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="MinPrice" class="form-label">Giá tối thiểu (VND)</label>
+            <input asp-for="MinPrice" type="number" class="form-control" placeholder="VD: 50000" min="0" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="MaxPrice" class="form-label">Giá tối đa (VND)</label>
+            <input asp-for="MaxPrice" type="number" class="form-control" placeholder="VD: 200000" min="0" />
+        </div>
+
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-primary">🔍 Tìm kiếm</button>
+            <a asp-controller="Books" asp-action="Search" class="btn btn-outline-secondary">🔄 Xoá bộ lọc</a>
+        </div>
+    </div>
+</form>
+
+@if (Model.HasSearched)
+{
+    <div class="info-panel mb-3">
+        <strong>Kết quả:</strong> tìm thấy <strong>@Model.Results.Count</strong> cuốn sách.
+    </div>
+
+    @await Html.PartialAsync("_BookSearchResultTable", Model.Results)
+}

@@ -1,0 +1,88 @@
+@model BookCreateViewModel
+@{
+    ViewData["Title"] = "Chỉnh Sửa Sách";
+    var editId = ViewBag.EditId;
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title">✏️ Chỉnh Sửa Sách</h2>
+        <p class="page-description">Cập nhật thông tin sách trong kho.</p>
+    </div>
+    <a class="btn btn-light" asp-controller="Books" asp-action="Index">← Quay lại danh sách</a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm p-4">
+            <form asp-controller="Books" asp-action="Edit" asp-route-id="@editId" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label asp-for="Isbn" class="form-label">ISBN <span class="text-danger">*</span></label>
+                    <input asp-for="Isbn" class="form-control" />
+                    <span asp-validation-for="Isbn" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label">Tên sách <span class="text-danger">*</span></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Author" class="form-label">Tác giả <span class="text-danger">*</span></label>
+                    <input asp-for="Author" class="form-control" />
+                    <span asp-validation-for="Author" class="text-danger small"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Genre" class="form-label">Thể loại <span class="text-danger">*</span></label>
+                        <input asp-for="Genre" class="form-control" />
+                        <span asp-validation-for="Genre" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Publisher" class="form-label">Nhà xuất bản <span class="text-danger">*</span></label>
+                        <input asp-for="Publisher" class="form-control" />
+                        <span asp-validation-for="Publisher" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="Price" class="form-label">Giá bán (VND) <span class="text-danger">*</span></label>
+                        <input asp-for="Price" type="number" class="form-control" min="1" />
+                        <span asp-validation-for="Price" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="Stock" class="form-label">Số lượng tồn kho</label>
+                        <input asp-for="Stock" type="number" class="form-control" min="0" />
+                        <span asp-validation-for="Stock" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="MinStock" class="form-label">Mức tồn tối thiểu</label>
+                        <input asp-for="MinStock" type="number" class="form-control" min="0" />
+                        <span asp-validation-for="MinStock" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PublishedDate" class="form-label">Ngày xuất bản <span class="text-danger">*</span></label>
+                    <input asp-for="PublishedDate" type="date" class="form-control" />
+                    <span asp-validation-for="PublishedDate" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-warning">💾 Cập nhật</button>
+                    <a asp-controller="Books" asp-action="Detail" asp-route-id="@editId"
+                       class="btn btn-outline-secondary">Huỷ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

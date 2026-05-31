@@ -173,7 +173,8 @@ public class BookService
             b.Title.ToLower().Contains(kw) ||
             b.Author.ToLower().Contains(kw) ||
             b.Genre.ToLower().Contains(kw) ||
-            b.Isbn.Contains(kw)
+            b.Isbn.Contains(kw) ||
+            b.Publisher.ToLower().Contains(kw)
         ).ToList();
     }
 

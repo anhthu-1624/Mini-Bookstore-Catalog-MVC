@@ -1,0 +1,26 @@
+@model List<BookListItemViewModel>
+
+@* BÀI TẬP 3 + 4: Partial View kết quả tìm kiếm, có thông báo khi không có kết quả *@
+
+@if (Model == null || Model.Count == 0)
+{
+    @* BÀI TẬP 4: box vàng khi không tìm thấy *@
+    <div class="alert alert-warning d-flex align-items-center gap-2">
+        <span style="font-size:1.3rem">⚠️</span>
+        <div>
+            <strong>Không tìm thấy sách phù hợp.</strong><br />
+            Vui lòng thử từ khoá khác hoặc thay đổi bộ lọc.
+        </div>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var book in Model)
+        {
+            <div class="col">
+                @await Html.PartialAsync("_BookCard", book)
+            </div>
+        }
+    </div>
+}
