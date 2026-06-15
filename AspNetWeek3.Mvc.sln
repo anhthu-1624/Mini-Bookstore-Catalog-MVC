@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetWeek2.Mvc", "AspNetWeek2.Mvc.csproj", "{5AFDA540-76B2-BE4C-DA3A-5F34F784F01E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetWeek3.Mvc", "AspNetWeek3.Mvc.csproj", "{5AFDA540-76B2-BE4C-DA3A-5F34F784F01E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

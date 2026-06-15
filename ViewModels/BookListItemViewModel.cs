@@ -1,8 +1,9 @@
-namespace AspNetWeek2.Mvc.ViewModels;
+namespace AspNetWeek4.Mvc.ViewModels;
 
 public class BookListItemViewModel
 {
     public int Id { get; set; }
+    public string BookCode { get; set; } = "";
 
     public string Isbn { get; set; } = "";
 
@@ -20,43 +21,19 @@ public class BookListItemViewModel
 
     public int MinStock { get; set; }
 
-    public DateTime PublishedDate { get; set; }
+    public string CategoryName { get; set; } = "";
 
-    // ── Computed properties ──────────────────────────────────────
+    // Computed properties
 
-    public string PriceText => $"{Price:N0} VND";
+    public string PriceText => $"{Price:N0} VNĐ";
 
-    public decimal InventoryValue => Price * Stock;
+    public string StockStatus =>
+        Stock <= 0 ? "Out of Stock" :
+        Stock <= MinStock ? "Low Stock" :
+        "In Stock";
 
-    public string InventoryValueText => $"{InventoryValue:N0} VND";
-
-    public string StockStatus
-    {
-        get
-        {
-            if (Stock <= 0)
-                return "Hết sách";
-
-            if (Stock <= MinStock)
-                return "Sắp hết";
-            if (Stock >=20)
-                return "Tồn kho cao";
-            return "Còn sách";
-            
-        }
-    }
-
-    public string StockStatusClass
-    {
-        get
-        {
-            if (Stock <= 0)
-                return "badge badge-danger";
-
-            if (Stock <= MinStock)
-                return "badge badge-warning";
-
-            return "badge badge-success";
-        }
-    }
+    public string StockStatusClass =>
+        Stock <= 0 ? "danger" :
+        Stock <= MinStock ? "warning" :
+        "success";
 }

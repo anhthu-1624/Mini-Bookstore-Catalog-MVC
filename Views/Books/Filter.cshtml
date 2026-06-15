@@ -1,0 +1,56 @@
+@model AspNetWeek4.Mvc.ViewModels.BookFilterViewModel
+@{ ViewData["Title"] = "Lọc sách"; }
+
+<h2>Lọc sách</h2>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label class="form-label">Danh mục</label>
+        <select name="categoryId" class="form-select">
+            <option value="">-- Tất cả --</option>
+            @foreach (var c in Model.Categories)
+            {
+                <option value="@c.Id" selected="@(Model.CategoryId == c.Id)">@c.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Giá từ</label>
+        <input name="minPrice" type="number" class="form-control" value="@Model.MinPrice" placeholder="0" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Giá đến</label>
+        <input name="maxPrice" type="number" class="form-control" value="@Model.MaxPrice" placeholder="1000000" />
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary w-100">Lọc</button>
+    </div>
+</form>
+
+<p class="text-muted">Tìm thấy <strong>@Model.Results.Count</strong> cuốn sách.</p>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Tên sách</th>
+            <th>Tác giả</th>
+            <th>Thể loại</th>
+            <th>Giá</th>
+            <th>Tồn kho</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var b in Model.Results)
+        {
+            <tr>
+                <td>@b.Title</td>
+                <td>@b.Author</td>
+                <td>@b.Genre</td>
+                <td>@b.Price.ToString("N0") VNĐ</td>
+                <td>@b.Stock</td>
+                <td><a href="/Books/Details/@b.Id" class="btn btn-sm btn-outline-primary">Xem</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

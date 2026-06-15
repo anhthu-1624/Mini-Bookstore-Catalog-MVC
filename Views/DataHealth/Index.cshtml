@@ -1,0 +1,32 @@
+@model DataHealthViewModel
+@{ ViewData["Title"] = "Data Health"; }
+
+<h2 class="mb-4">🏥 EF Core Data Health</h2>
+
+<table class="table table-bordered align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Check</th>
+            <th>Expected</th>
+            <th>Actual</th>
+            <th>Status</th>
+            <th>Note</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in Model.Checks)
+        {
+            <tr>
+                <td>@row.Check</td>
+                <td>@row.Expected</td>
+                <td>@row.Actual</td>
+                <td>
+                    <span class="badge @(row.Status == "OK" ? "bg-success" : "bg-danger")">
+                        @row.Status
+                    </span>
+                </td>
+                <td class="text-muted">@row.Note</td>
+            </tr>
+        }
+    </tbody>
+</table>

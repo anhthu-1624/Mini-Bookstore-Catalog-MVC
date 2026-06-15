@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AspNetWeek3.Mvc")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+264ca64dca2c4c2bda0b23b369ecfe03c48ef96f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b8dee81117dae585579cd7b169cbb403dc355f9")]
 [assembly: System.Reflection.AssemblyProductAttribute("AspNetWeek3.Mvc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AspNetWeek3.Mvc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

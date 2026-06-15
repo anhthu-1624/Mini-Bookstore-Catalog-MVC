@@ -1,0 +1,56 @@
+@model List<Sale>
+@{
+    ViewData["Title"] = "Danh Sách Hóa Đơn";
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title">🧾 Danh Sách Hóa Đơn</h2>
+        <p class="page-description">Tất cả các giao dịch bán sách.</p>
+    </div>
+    <a class="btn btn-success" asp-controller="Sales" asp-action="Create">+ Bán sách</a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">Chưa có hóa đơn nào.</div>
+}
+else
+{
+    <table class="table table-bordered table-striped align-middle mt-3">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Ngày bán</th>
+                <th>Số mặt hàng</th>
+                <th>Tổng tiền</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sale in Model)
+            {
+                <tr>
+                    <td>@sale.Id</td>
+                    <td>@sale.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@sale.SaleItems.Count mặt hàng</td>
+                    <td><strong class="text-primary">@sale.TotalAmount.ToString("N0") ₫</strong></td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary"
+                           asp-controller="Sales" asp-action="Detail"
+                           asp-route-id="@sale.Id">Xem chi tiết</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<p class="mt-4">
+    <a class="btn btn-light" asp-controller="Home" asp-action="Index">← Quay lại trang chủ</a>
+</p>

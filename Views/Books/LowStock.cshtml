@@ -1,0 +1,29 @@
+@model List<AspNetWeek4.Mvc.ViewModels.BookListItemViewModel>
+@{ ViewData["Title"] = "Sách sắp hết hàng"; }
+
+<h2>Sách sắp hết hàng</h2>
+<p class="text-muted">Tìm thấy <strong>@Model.Count</strong> đầu sách cần nhập thêm.</p>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Tên sách</th>
+            <th>Tác giả</th>
+            <th>Tồn kho</th>
+            <th>Tồn tối thiểu</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var b in Model)
+        {
+            <tr class="table-warning">
+                <td>@b.Title</td>
+                <td>@b.Author</td>
+                <td><span class="badge bg-danger">@b.Stock</span></td>
+                <td>@b.MinStock</td>
+                <td><a href="/Books/Details/@b.Id" class="btn btn-sm btn-outline-primary">Xem</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

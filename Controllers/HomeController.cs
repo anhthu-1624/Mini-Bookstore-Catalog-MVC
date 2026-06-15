@@ -1,14 +1,37 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using AspNetWeek2.Mvc.Models;
+using AspNetWeek4.Mvc.Models;
+using AspNetWeek4.Mvc.Services;
+using AspNetWeek4.Mvc.ViewModels;
 
-namespace AspNetWeek2.Mvc.Controllers;
+namespace AspNetWeek4.Mvc.Controllers;
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly IBookService _bookService;
+
+    public HomeController(IBookService bookService)
     {
-        return View();
+        _bookService = bookService;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        var result = await _bookService.GetBookListAsync(
+            keyword: "",
+            genre: "",
+            stock: "",
+            sortBy: "newest",
+            page: 1,
+            pageSize: 3
+        );
+
+        var vm = new HomeIndexViewModel
+        {
+            FeaturedBooks = result.Items
+        };
+
+        return View(vm);
     }
 
     public IActionResult Privacy()

@@ -30,6 +30,11 @@
                 <th>ISBN</th>
                 <td><code>@Model.Isbn</code></td>
             </tr>
+            </tr>
+            <tr>
+                <th>Mã sách</th>
+                <td><code>@Model.BookCode</code></td>
+            </tr>
             <tr>
                 <th>Tên sách</th>
                 <td><strong>@Model.Title</strong></td>
@@ -50,6 +55,8 @@
                 <th>Ngày xuất bản</th>
                 <td>@Model.PublishedDateText</td>
             </tr>
+                <tr><th>Danh mục</th><td>@Model.CategoryName</td></tr>
+
             <tr>
                 <th>Giá bán</th>
                 <td>@Model.PriceText</td>

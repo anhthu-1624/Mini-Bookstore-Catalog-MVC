@@ -1,8 +1,10 @@
-namespace AspNetWeek2.Mvc.ViewModels;
+namespace AspNetWeek4.Mvc.ViewModels;
 
 public class BookDetailViewModel
 {
     public int Id { get; set; }
+
+    public string BookCode { get; set; } = "";
 
     public string Isbn { get; set; } = "";
 
@@ -23,6 +25,8 @@ public class BookDetailViewModel
     public DateTime PublishedDate { get; set; }
 
     public DateTime LastUpdatedAt { get; set; }
+    public string?  CategoryName  { get; set; }
+
 
     // ── Computed properties ──────────────────────────────────────
 

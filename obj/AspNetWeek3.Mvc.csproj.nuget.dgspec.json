@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\AspNetWeek3.Mvc\\AspNetWeek3.Mvc.csproj": {}
+    "D:\\AspNetWeek4.Mvc\\AspNetWeek3.Mvc.csproj": {}
   },
   "projects": {
-    "D:\\AspNetWeek3.Mvc\\AspNetWeek3.Mvc.csproj": {
+    "D:\\AspNetWeek4.Mvc\\AspNetWeek3.Mvc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\AspNetWeek3.Mvc\\AspNetWeek3.Mvc.csproj",
+        "projectUniqueName": "D:\\AspNetWeek4.Mvc\\AspNetWeek3.Mvc.csproj",
         "projectName": "AspNetWeek3.Mvc",
-        "projectPath": "D:\\AspNetWeek3.Mvc\\AspNetWeek3.Mvc.csproj",
+        "projectPath": "D:\\AspNetWeek4.Mvc\\AspNetWeek3.Mvc.csproj",
         "packagesPath": "C:\\Users\\ANH THU\\.nuget\\packages\\",
-        "outputPath": "D:\\AspNetWeek3.Mvc\\obj\\",
+        "outputPath": "D:\\AspNetWeek4.Mvc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ANH THU\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -43,6 +43,22 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[10.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[10.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[10.0.9, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

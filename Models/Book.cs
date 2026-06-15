@@ -1,4 +1,4 @@
-namespace AspNetWeek2.Mvc.Models;
+namespace AspNetWeek4.Mvc.Models;
 
 public class Book
 {
@@ -23,4 +23,10 @@ public class Book
     public DateTime PublishedDate { get; set; }
 
     public DateTime LastUpdatedAt { get; set; }
+
+    // Foreign Key
+    public int CategoryId { get; set; }
+
+    public Category? Category { get; set; }
+    public string BookCode { get; set; } = "";
 }

@@ -1,4 +1,5 @@
 @model PagedResult<BookListItemViewModel>
+
 @{
     ViewData["Title"] = "Danh Sách Sách";
 
@@ -24,6 +25,22 @@
         <a class="btn btn-primary" asp-controller="Books" asp-action="Stats">📊 Thống kê</a>
     </div>
 </div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
 
 <form method="get" asp-controller="Books" asp-action="Index" class="row g-2 mb-4">
     <div class="col-md-4">

@@ -1,12 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspNetWeek2.Mvc.ViewModels;
+namespace AspNetWeek4.Mvc.ViewModels;
 
 public class BookCreateViewModel
 {
     [Required(ErrorMessage = "ISBN không được để trống.")]
     [StringLength(20, ErrorMessage = "ISBN tối đa 20 ký tự.")]
     public string Isbn { get; set; } = "";
+
+    [Required(ErrorMessage = "Mã sách không được để trống.")]
+    [StringLength(20, ErrorMessage = "Mã sách tối đa 20 ký tự.")]
+    public string BookCode { get; set; } = "";
 
     [Required(ErrorMessage = "Tên sách không được để trống.")]
     [StringLength(200, ErrorMessage = "Tên sách tối đa 200 ký tự.")]
@@ -34,4 +38,7 @@ public class BookCreateViewModel
 
     [Required(ErrorMessage = "Ngày xuất bản không được để trống.")]
     public DateTime PublishedDate { get; set; } = DateTime.Today;
+    [Required(ErrorMessage = "Danh mục không được để trống.")]
+    [Range(1, int.MaxValue, ErrorMessage = "Vui lòng chọn danh mục.")]
+    public int CategoryId { get; set; }
 }

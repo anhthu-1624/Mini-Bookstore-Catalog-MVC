@@ -1,8 +1,9 @@
-namespace AspNetWeek2.Mvc.Models;
+namespace AspNetWeek4.Mvc.Models;
 
 public class ErrorViewModel
 {
     public string? RequestId { get; set; }
 
-    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    public bool ShowRequestId =>
+        !string.IsNullOrEmpty(RequestId);
 }

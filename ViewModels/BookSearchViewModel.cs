@@ -1,4 +1,4 @@
-﻿namespace AspNetWeek2.Mvc.ViewModels;
+﻿namespace AspNetWeek4.Mvc.ViewModels;
 
 public class BookSearchViewModel
 {
